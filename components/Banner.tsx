@@ -3,7 +3,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 function Banner() {
   return (
-      <div className="w-full bg-gray-100 shadow-lg "> 
+      <div className="w-full  "> 
     <div className="sm:max-w-screen-2xl mx-auto">
         <Carousel infiniteLoop autoPlay emulateTouch interval={5000}  showIndicators={false} showThumbs={false} showStatus={false}>
             <div>
