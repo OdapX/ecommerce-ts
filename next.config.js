@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  images : ['m.media-amazon.com'],
+  images: {
+    domains: ['i.pinimg.com'],
+  },
   reactStrictMode: true,
 }
