@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Banner from '../components/Banner'
 import Header from '../components/Header'
+import ProductFeed from '../components/ProductFeed'
 
 const Home: NextPage = () => {
   return (
@@ -13,6 +14,7 @@ const Home: NextPage = () => {
       </Head>
       <Header/>
       <Banner/>
+      <ProductFeed/>
     
     </>
   )
