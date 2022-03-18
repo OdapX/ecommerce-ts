@@ -1,6 +1,6 @@
 import { useSession, signIn, signOut } from "next-auth/react"
 function Header() {
-    const { data: session } = useSession()
+    const {  session } = useSession()
   return (
       <div className="bg-[#121923] px-2 py-2 "> 
     <div className=" flex  items-center justify-between py-5 space-x-5 ">
@@ -15,7 +15,7 @@ function Header() {
           </div>
           <div className="flex items-center space-x-3 text-white">
               {session ? (<div className="hidden lg:block">
-                    <p className="text-sm ">Signed in as {session?.user.name} </p>
+                    <p className="text-sm ">Signed in as {session.user.name} </p>
                     <button className="font-bold text-sm lg:text-lg" onClick={signOut}>Logout</button>
                 </div>) :
                   (<div className="hidden lg:block">
