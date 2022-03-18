@@ -10,8 +10,12 @@ export default NextAuth({
     
     GoogleProvider({
       clientId : process.env.GOOGLE_ID || "",
-      clientSecret: process.env.GOOGLE_SECRET || ""
+      clientSecret: process.env.GOOGLE_SECRET || "",
     }),
-    
-  ]
+     ],
+     callbacks: {
+    session({ session, token, user }) {
+      return session || null
+    },
+  },
 })
