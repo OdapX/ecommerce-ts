@@ -15,7 +15,7 @@ function Header() {
           </div>
           <div className="flex items-center space-x-3 text-white">
               {session ? (<div className="hidden lg:block">
-                    <p className="text-sm ">Signed in as {session.user.name || null} </p>
+                    <p className="text-sm ">Signed in as {session?.user?.name || null} </p>
                     <p className="font-bold text-sm lg:text-lg" onClick={signOut}>Logout</p>
                 </div>) :
                   (<div className="hidden lg:block">
