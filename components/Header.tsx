@@ -1,5 +1,8 @@
 import { useSession, signIn, signOut } from "next-auth/react"
+import { SelectProducts } from "../Reduxstore/BasketSlice"
+import { useAppSelector } from "../Reduxstore/Hooks"
 function Header() {
+    const Items = useAppSelector(SelectProducts)
     const { data: session } = useSession()
   return (
       <div className="bg-[#121923] px-2 py-2 "> 
@@ -15,7 +18,7 @@ function Header() {
           </div>
           <div className="flex items-center space-x-3 text-white">
               {session ? (<div className="hidden lg:block">
-                    <p className="text-sm ">Signed in as {session?.user?.name || null} </p>
+                    <p className="text-sm ">Signed in as {session?.user?.name } </p>
                     <button className="font-bold text-sm lg:text-lg" onClick={()=>signOut}>Logout</button>
                 </div>) :
                   (<div className="hidden lg:block">
@@ -37,7 +40,7 @@ function Header() {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <span className="absolute -top-1 -right-1 bg-yellow-400 text-black rounded-full text-xs font-bold px-1">0</span>
+                        <span className="absolute -top-1 -right-1 bg-yellow-400 text-black rounded-full text-xs font-bold px-1">{Items.length || 0}</span>
                     </div>
                     <p className="hidden lg:flex font-bold">Basket</p>
                 </div>

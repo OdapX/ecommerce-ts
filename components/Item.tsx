@@ -1,9 +1,18 @@
 import {Product} from "../typings"
 import Currency from "react-currency-formatter"
+import {SelectProducts,AddToBasket} from "../Reduxstore/BasketSlice"
+import { useAppSelector, useAppDispatch } from '../Reduxstore/Hooks'
 interface Props {
      product : Product
 }
 export default function Item({product} : Props) {
+   
+    const dispatch = useAppDispatch()
+  
+  const AddIemToBasket = ()=>{
+        dispatch(AddToBasket(product))
+        
+  }
   return (
     <div className="flex flex-col  shadow bg-white space-y-3 overflow-hidden p-3 group cursor-pointer">
         <img loading="lazy" src={product.image} alt="" className="object-contain flex justify-center h-72 w-full transition-transform duration-500 ease-in-out hover:scale-105" />
@@ -18,7 +27,7 @@ export default function Item({product} : Props) {
           <div className="font-semibold text-2xl"> 
           <Currency  quantity={product.price} />
           </div>
-         
+          <button className="w-full py-2 " onClick={AddIemToBasket}>ADD TO BASKET</button>
         </div>
         
     </div>
