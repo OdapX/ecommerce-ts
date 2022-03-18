@@ -33,10 +33,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
          try{
             const res = await fetch(`${process.env.FAKE_STORE_API_URL}/products`)
              const products : [Product]   =  await res.json()
-             
+           
              return { 
               props:{
-                products 
+                products
               }
           }
             
