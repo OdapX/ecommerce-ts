@@ -16,11 +16,11 @@ function Header() {
           <div className="flex items-center space-x-3 text-white">
               {session ? (<div className="hidden lg:block">
                     <p className="text-sm ">Signed in as {session?.user?.name || null} </p>
-                    <p className="font-bold text-sm lg:text-lg" onClick={signOut}>Logout</p>
+                    <button className="font-bold text-sm lg:text-lg" onClick={()=>signOut}>Logout</button>
                 </div>) :
                   (<div className="hidden lg:block">
                     <p className="text-sm "> Not signed in</p>
-                    <button className="font-bold text-sm lg:text-lg" onClick={signIn}>Accounts and lists</button>
+                    <button className="font-bold text-sm lg:text-lg" onClick={()=>signIn}>Accounts and lists</button>
                 </div>)
                  }
                 
