@@ -14,13 +14,24 @@ const BasketSlice = createSlice({
   initialState,
   reducers: {
     AddToBasket: (state :ProduceState ,action : PayloadAction<Product>) => {
+      let exist : boolean = false;
+      state.products.forEach((product: Product )=> {
+           if (product.id === action.payload.id) {
+                        exist = true;
+                        return
+                       
+               }
+              }
+
+        )
+      
+       if(!exist) state.products = [...state.products,action.payload] 
        
-      state.products= [...state.products,action.payload]
-      console.log(state.products)
       
     },
     RemoveFromBasket : (state: ProduceState,action: PayloadAction<number>) => {
        state.products= state.products.filter(product =>product.id !== action.payload)
+       console.log(state.products)
     }
   }
 })

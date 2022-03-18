@@ -5,7 +5,7 @@ function Header() {
     const Items = useAppSelector(SelectProducts)
     const { data: session } = useSession()
   return (
-      <div className="bg-[#121923] px-2 py-2 "> 
+      <div className="sticky top-0 z-20 bg-[#121923] px-2 py-2 "> 
     <div className=" flex  items-center justify-between py-5 space-x-5 ">
            <p className="font-bold text-3xl text-white">FAKESTORE</p>
            <div className="hidden relative  rounded-lg lg:flex flex-grow  group h-11 space-x-2 focus:ring focus:ring-green-600">
@@ -19,11 +19,11 @@ function Header() {
           <div className="flex items-center space-x-3 text-white">
               {session ? (<div className="hidden lg:block">
                     <p className="text-sm ">Signed in as {session?.user?.name } </p>
-                    <button className="font-bold text-sm lg:text-lg" onClick={()=>signOut}>Logout</button>
+                    <button className="font-bold text-sm lg:text-lg" onClick={()=>signOut()}>Logout</button>
                 </div>) :
                   (<div className="hidden lg:block">
                     <p className="text-sm "> Not signed in</p>
-                    <button className="font-bold text-sm lg:text-lg" onClick={()=>signIn}>Accounts and lists</button>
+                    <button className="font-bold text-sm lg:text-lg" onClick={()=>signIn()}>Accounts and lists</button>
                 </div>)
                  }
                 

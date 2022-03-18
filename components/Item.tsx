@@ -1,6 +1,6 @@
 import {Product} from "../typings"
 import Currency from "react-currency-formatter"
-import {SelectProducts,AddToBasket} from "../Reduxstore/BasketSlice"
+import {SelectProducts,AddToBasket, RemoveFromBasket} from "../Reduxstore/BasketSlice"
 import { useAppSelector, useAppDispatch } from '../Reduxstore/Hooks'
 interface Props {
      product : Product
@@ -10,8 +10,10 @@ export default function Item({product} : Props) {
     const dispatch = useAppDispatch()
   
   const AddIemToBasket = ()=>{
-        dispatch(AddToBasket(product))
-        
+        dispatch(AddToBasket(product))   
+  }
+  const RemoveItemFromBasket = ()=>{
+    dispatch(RemoveFromBasket(product.id))
   }
   return (
     <div className="flex flex-col  shadow bg-white space-y-3 overflow-hidden p-3 group cursor-pointer">
@@ -28,6 +30,7 @@ export default function Item({product} : Props) {
           <Currency  quantity={product.price} />
           </div>
           <button className="w-full py-2 " onClick={AddIemToBasket}>ADD TO BASKET</button>
+           <button className="w-full py-2 " onClick={RemoveItemFromBasket}>REMOVE TO BASKET</button>
         </div>
         
     </div>
