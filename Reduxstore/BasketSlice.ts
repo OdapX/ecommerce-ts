@@ -26,22 +26,38 @@ const BasketSlice = createSlice({
            if (command.product.id === action.payload.product.id) {
                         exist = true;
                         command.quantity++;
-                        
                         return    
                }
             }
         )
         if(!exist){
-         
         state.Commands = [...state.Commands,action.payload]
-      
-      }
-        
-      
+             }
+ 
     },
     RemoveFromBasket : (state: CommandState,action: PayloadAction<number>) => {
-       state.Commands= state.Commands.filter(command =>command.product.id !== action.payload)
-       console.log(state.Commands)
+      let exist :boolean = false;
+      let available :boolean = false;
+       state.Commands.forEach((command)=>{
+         if (command.product.id === action.payload) {
+            exist = true
+             if(command.quantity > 1){ 
+               available =true
+               command.quantity--;
+               return
+              }else{
+               available = false
+              }
+             
+       }
+      })
+       if(exist && !available){
+         console.log("xe")
+          state.Commands= state.Commands.filter(command =>command.product.id !== action.payload)
+       }
+
+       
+      
     }
   }
 })
