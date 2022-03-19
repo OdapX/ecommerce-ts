@@ -1,40 +1,50 @@
 import {createSlice,PayloadAction  } from '@reduxjs/toolkit'
 import {Product} from "./../typings"
 import type { RootState } from './store'
-interface ProduceState{
-    products  : Product[]
+
+interface Command {
+      product : Product,
+      quantity:number
+
 }
 
-const initialState: ProduceState = {
-      products : new Array<Product>()
+interface CommandState{
+    Commands  : Command[]
+}
+
+const initialState: CommandState = {
+      Commands : new Array<Command>()
   }
 
 const BasketSlice = createSlice({
   name: "basket",
   initialState,
   reducers: {
-    AddToBasket: (state :ProduceState ,action : PayloadAction<Product>) => {
+    AddToBasket: (state :CommandState ,action : PayloadAction<Command>) => {
       let exist : boolean = false;
-      state.products.forEach((product: Product )=> {
-           if (product.id === action.payload.id) {
+      state.Commands.forEach((command: Command )=> {
+           if (command.product.id === action.payload.product.id) {
                         exist = true;
-                        return
-                       
+                        command.quantity++;
+                        
+                        return    
                }
-              }
-
+            }
         )
+        if(!exist){
+         
+        state.Commands = [...state.Commands,action.payload]
       
-       if(!exist) state.products = [...state.products,action.payload] 
-       
+      }
+        
       
     },
-    RemoveFromBasket : (state: ProduceState,action: PayloadAction<number>) => {
-       state.products= state.products.filter(product =>product.id !== action.payload)
-       console.log(state.products)
+    RemoveFromBasket : (state: CommandState,action: PayloadAction<number>) => {
+       state.Commands= state.Commands.filter(command =>command.product.id !== action.payload)
+       console.log(state.Commands)
     }
   }
 })
 export default BasketSlice.reducer
-export const SelectProducts = (state : RootState) => state.products
+export const SelectProducts = (state : RootState) => state.Commands
 export const { AddToBasket, RemoveFromBasket  } = BasketSlice.actions

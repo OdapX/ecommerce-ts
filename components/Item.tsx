@@ -2,21 +2,23 @@ import {Product} from "../typings"
 import Currency from "react-currency-formatter"
 import {SelectProducts,AddToBasket, RemoveFromBasket} from "../Reduxstore/BasketSlice"
 import { useAppSelector, useAppDispatch } from '../Reduxstore/Hooks'
+import {useRouter} from "next/router"
 interface Props {
      product : Product
 }
 export default function Item({product} : Props) {
-   
+   const router = useRouter()
     const dispatch = useAppDispatch()
   
   const AddIemToBasket = ()=>{
-        dispatch(AddToBasket(product))   
+        dispatch(AddToBasket({product,quantity : 1}))   
   }
   const RemoveItemFromBasket = ()=>{
     dispatch(RemoveFromBasket(product.id))
   }
   return (
-    <div className="flex flex-col  shadow bg-white space-y-3 overflow-hidden p-3 group cursor-pointer">
+    <div className="flex flex-col  shadow bg-white space-y-3 overflow-hidden p-3 group cursor-pointer" >
+        <div onClick={() => router.push(`/products/${product.id}`)} > 
         <img loading="lazy" src={product.image} alt="" className="object-contain flex justify-center h-72 w-full transition-transform duration-500 ease-in-out hover:scale-105" />
         <div className="px-5 space-y-2">
           <p className="font-semibold text-xl">{product.title}</p>
@@ -29,10 +31,12 @@ export default function Item({product} : Props) {
           <div className="font-semibold text-2xl"> 
           <Currency  quantity={product.price} />
           </div>
+        </div> 
+        </div>
+        <div className=""> 
           <button className="w-full py-2 " onClick={AddIemToBasket}>ADD TO BASKET</button>
            <button className="w-full py-2 " onClick={RemoveItemFromBasket}>REMOVE TO BASKET</button>
-        </div>
-        
+          </div>
     </div>
   )
 }

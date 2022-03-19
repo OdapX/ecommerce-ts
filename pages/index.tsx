@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import ProductFeed from '../components/ProductFeed'
 import {Product} from "../typings"
 
+
 interface Props { 
    products : [Product]
 }
@@ -17,7 +18,6 @@ const Home = ({products} : Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="bg-gray-200"> 
-      <Header/>
       <Banner/>
       <ProductFeed products = { products } />
       </main>
