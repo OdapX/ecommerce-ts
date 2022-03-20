@@ -35,7 +35,10 @@ function Checkout() {
 
       })
     })
-    console.log(checkoutSession.body.data)
+    const res  = await checkoutSession.json()
+
+    console.log(res.id)
+    
     }
   return (
    
