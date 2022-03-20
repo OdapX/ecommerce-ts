@@ -52,7 +52,7 @@ const BasketSlice = createSlice({
        }
       })
        if(exist && !available){
-         console.log("xe")
+        
           state.Commands= state.Commands.filter(command =>command.product.id !== action.payload)
        }
 
