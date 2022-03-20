@@ -4,22 +4,38 @@ import {SelectProducts,RemoveFromBasket} from "../Reduxstore/BasketSlice"
 import {Product} from "./../typings"
 import Currency from "react-currency-formatter"
 import { loadStripe } from "@stripe/stripe-js"
-const stripePromise = loadStripe(process.env.stripe_public_key)
-const createCheckoutSession = async ()=>{
-    const stripe = await stripePromise
-}
+import { useSession} from "next-auth/react"
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+
 interface Command {
       product : Product,
       quantity:number
 
 }
 function Checkout() {
+   const {data : session} = useSession()
     const dispatch = useAppDispatch()
     const commands : Command[]= useAppSelector(SelectProducts)
     
     const RemoveItemFromBasket = (id:number)=> {
       
         dispatch(RemoveFromBasket(id))
+    }
+    const createCheckoutSession = async ()=>{
+      console.log(process.env.stripe_public_key);
+    const stripe = await stripePromise
+    const checkoutSession = await fetch("/api/create-session",{
+      method: "POST",
+      headers:{
+        contentType: "application/json",
+      },
+      body: JSON.stringify({
+            commands,
+            email:session?.user?.email
+
+      })
+    })
+    console.log(checkoutSession.body.data)
     }
   return (
    
@@ -73,7 +89,7 @@ function Checkout() {
                 <Currency  quantity={commands.reduce((total,item)=>(total+(item.product.price*item.quantity)),0)} />        
                  </span>
          </div>
-         <button role="link" type="button" className="bg-yellow-400 text-semibold text-sm rounded-md w-full py-3">PROCEED TO CHECKOUT</button>
+         <button role="link" type="button" className="bg-yellow-400 text-semibold text-sm rounded-md w-full py-3" onClick={createCheckoutSession}>PROCEED TO CHECKOUT</button>
        </div>
        </>
          )

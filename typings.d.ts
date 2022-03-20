@@ -11,3 +11,8 @@ export interface Product{
     }
 
 }
+export interface Command {
+      product : Product,
+      quantity:number
+
+}

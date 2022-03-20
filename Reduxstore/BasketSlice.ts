@@ -1,12 +1,8 @@
 import {createSlice,PayloadAction  } from '@reduxjs/toolkit'
-import {Product} from "./../typings"
+import {Command} from "./../typings"
 import type { RootState } from './store'
 
-interface Command {
-      product : Product,
-      quantity:number
 
-}
 
 interface CommandState{
     Commands  : Command[]
