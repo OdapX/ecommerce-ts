@@ -3,6 +3,7 @@ import { signIn, signOut, getSession, useSession } from 'next-auth/react'
 import moment from 'moment'
 import Currency from 'react-currency-formatter'
 import { useState } from 'react'
+import Order from '../components/Order'
 interface Props {
   orders: any
 }
@@ -19,29 +20,13 @@ function Orders({ orders }: Props) {
 
           <div className="mt-7 ">
             {orders.map((order: any) => (
-              <div>
-                <div className="mb-10 flex items-center justify-between space-y-10  px-5">
-                  <div className="flex space-x-2 ">
-                    {order.images.map((image: any) => (
-                      <img
-                        src={image}
-                        className="flex h-16 w-16 space-x-2 object-contain"
-                      />
-                    ))}
-                  </div>
-                  <div className=" text-lg">
-                    <div className="flex">
-                      <p>Total Price : </p>
-                      <Currency quantity={order.amount} />
-                    </div>
-                    <div className="flex text-sm">
-                      <p>Shipping Amount : </p>
-                      <Currency quantity={order.amountShipping} />
-                    </div>
-                  </div>
-                </div>
-                <hr />
-              </div>
+              <Order
+                id={order.id}
+                amount={order.amount}
+                shipping_amount={order.amountShipping}
+                images={order.images}
+                timestamp={order.timestamp}
+              />
             ))}
           </div>
         </main>
@@ -93,31 +78,26 @@ function Orders({ orders }: Props) {
 export default Orders
 
 export async function getServerSideProps(context: any) {
-  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
   const session = await getSession(context)
 
   try {
+    const email = session?.user?.email || ''
     const OrderCollection = await db
       .collection('users')
-      .doc(session?.user?.email)
+      .doc(email)
       .collection('orders')
       .get()
 
     const orders = await Promise.all(
       OrderCollection.docs.map(async (order) => ({
         id: order.id,
-        amount: order.data().amount,
-        amountShipping: order.data().shipping_amount,
+        amount: order.data().amount / 100,
+        amountShipping: order.data().shipping_amount / 100,
         images: order.data().images,
         timestamp: moment(order.data().timestamp.toDate()).unix(),
-        items: (
-          await stripe.checkout.sessions.listLineItems(order.id, {
-            limit: 100,
-          })
-        ).data,
       }))
     )
-    console.log(orders)
+
     return {
       props: {
         orders,

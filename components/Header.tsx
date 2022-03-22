@@ -38,9 +38,9 @@ function Header() {
             </svg>
           </div>
         </div>
-        <div className="flex items-center space-x-3 text-white">
+        <div className="flex items-center space-x-9 text-white">
           {session ? (
-            <div className="hidden lg:block">
+            <div className="hidden cursor-pointer border border-[#121923] p-1 hover:border-white lg:block">
               <p className="text-sm ">Signed in as {session?.user?.name} </p>
               <button
                 className="text-sm font-semibold lg:text-lg"
@@ -50,7 +50,7 @@ function Header() {
               </button>
             </div>
           ) : (
-            <div className="hidden lg:block">
+            <div className="hidden cursor-pointer border border-[#121923] p-1 hover:border-white lg:block">
               <p className="text-sm "> Not signed in</p>
               <button
                 className="text-sm font-bold lg:text-lg"
@@ -61,7 +61,10 @@ function Header() {
             </div>
           )}
 
-          <div className="hidden lg:block">
+          <div
+            className="hidden cursor-pointer border border-[#121923] p-1 hover:border-white lg:block"
+            onClick={() => router.push('/Orders')}
+          >
             <p className="text-sm ">Check your orders </p>
             <p className="text-sm font-semibold lg:text-lg">Orders</p>
           </div>
@@ -70,7 +73,7 @@ function Header() {
           </div>
 
           <div
-            className="flex cursor-pointer items-center space-x-2"
+            className="flex cursor-pointer items-center space-x-2 border border-[#121923] py-2 px-1 hover:border-white "
             onClick={() => router.push('/Checkout')}
           >
             <div className="relative  ">
