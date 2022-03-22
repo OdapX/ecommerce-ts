@@ -1,113 +1,159 @@
-import Header from "../components/Header"
-import {useAppSelector, useAppDispatch} from "../Reduxstore/Hooks"
-import {SelectProducts,RemoveFromBasket} from "../Reduxstore/BasketSlice"
-import {Product} from "./../typings"
-import Currency from "react-currency-formatter"
-import { loadStripe } from "@stripe/stripe-js"
-import { useSession} from "next-auth/react"
+import Header from '../components/Header'
+import { useAppSelector, useAppDispatch } from '../Reduxstore/Hooks'
+import { SelectProducts, RemoveFromBasket } from '../Reduxstore/BasketSlice'
+import { Product } from './../typings'
+import Currency from 'react-currency-formatter'
+import { loadStripe } from '@stripe/stripe-js'
+import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
 
 interface Command {
-      product : Product,
-      quantity:number
-
+  product: Product
+  quantity: number
 }
 function Checkout() {
-   const {data : session} = useSession()
-    const dispatch = useAppDispatch()
-    const commands : Command[]= useAppSelector(SelectProducts)
-    
-    const RemoveItemFromBasket = (id:number)=> {
-      
-        dispatch(RemoveFromBasket(id))
-    }
-    const createCheckoutSession = async ()=>{
+  const { data: session } = useSession()
+  const dispatch = useAppDispatch()
+  const commands: Command[] = useAppSelector(SelectProducts)
+
+  const RemoveItemFromBasket = (id: number) => {
+    dispatch(RemoveFromBasket(id))
+  }
+  const createCheckoutSession = async () => {
     const stripe = await stripePromise
-    const response = await fetch("/api/create-session",{
-                  method: "POST",
-                  headers:{
-                      contentType: "application/json",
-                          },
-                  body: JSON.stringify({
-                        commands,
-                        email:session?.user?.email
-
-                  })
-             })
-
-    const checkoutSession  = await response.json()
-     
-    const result = await stripe?.redirectToCheckout({
-        sessionId :checkoutSession.id
+    const response = await fetch('/api/create-session', {
+      method: 'POST',
+      headers: {
+        contentType: 'application/json',
+      },
+      body: JSON.stringify({
+        commands,
+        email: session?.user?.email,
+      }),
     })
 
-    if(result?.error) {
-        alert(result.error.message)
+    const checkoutSession = await response.json()
+
+    const result = await stripe?.redirectToCheckout({
+      sessionId: checkoutSession.id,
+    })
+
+    if (result?.error) {
+      alert(result.error.message)
     }
-  
-    
-    }
+  }
+  const [Spin, setSpin] = useState(false)
   return (
-   
-  
-    <main className=" bg-gray-200 px-7 py-10 grid flex-col-reverse lg:grid-cols-5 xl:grid-cols-7 gap-5  ">
-        { commands.length === 0 ? <div></div> : 
-        
-        
-         ( <> 
-              <div className="space-y-2  bg-white  lg:col-span-4 xl:col-span-6 flex flex-col px-10 py-5">
-           <h1 className="text-3xl font-sansserif">Shopping Cart</h1>
-           <div className="relative flex flex-row-reverse bg-white px-7">
-                 <p className="text-lg" >Price</p>
-           </div>
-           <hr className="w-full bg-gray-500" />
-           { commands?.map(command =>(
-               <div className="p-4" key={command.product.id}>  
-               <div className="grid grid-cols-1 lg:grid-cols-5 pb-2">
-               <img src={command.product.image} alt="" className="max-h-48 object-contain w-48"/>
-                <div className="col-span-4">
-                    <div className="flex justify-between"> 
-                      <h1 className="text-2xl font-sansserif">{command.product.title}</h1>
-                      <div className="font-bold text-xl">
-              <Currency  quantity={command.product.price}/>
+    <main className=" grid flex-col-reverse gap-5 bg-gray-200 px-7 py-10 lg:grid-cols-5 xl:grid-cols-7  ">
+      {commands.length === 0 ? (
+        <div></div>
+      ) : (
+        <>
+          <div className="flex  flex-col  space-y-2 bg-white px-10 py-5 lg:col-span-4 xl:col-span-6">
+            <h1 className="font-sansserif text-3xl">Shopping Cart</h1>
+            <div className="relative flex flex-row-reverse bg-white px-7">
+              <p className="text-lg">Price</p>
+            </div>
+            <hr className="w-full bg-gray-500" />
+            {commands?.map((command) => (
+              <div className="p-4" key={command.product.id}>
+                <div className="grid grid-cols-1 pb-2 lg:grid-cols-5">
+                  <img
+                    src={command.product.image}
+                    alt=""
+                    className="max-h-48 w-48 object-contain"
+                  />
+                  <div className="col-span-4">
+                    <div className="flex justify-between">
+                      <h1 className="font-sansserif text-2xl">
+                        {command.product.title}
+                      </h1>
+                      <div className="text-xl font-bold">
+                        <Currency quantity={command.product.price} />
                       </div>
-                     
                     </div>
-                    
-                    <p className="text-green-600 text-md font-semibold">Quantity : {command.quantity}</p>
 
-                    <p className=" text-md font-semibold mt-5">Category : {command.product.category}</p>
+                    <p className="text-md font-semibold text-green-600">
+                      Quantity : {command.quantity}
+                    </p>
 
-                    <button className="bg-yellow-600 text-white mt-7 px-4 py-2 rounded-md text-xl font-sansserif" onClick={() => RemoveItemFromBasket(command.product.id)}>Remove Item</button>
+                    <p className=" text-md mt-5 font-semibold">
+                      Category : {command.product.category}
+                    </p>
+
+                    <button
+                      className="font-sansserif mt-7 rounded-md bg-yellow-600 px-4 py-2 text-xl text-white"
+                      onClick={() => RemoveItemFromBasket(command.product.id)}
+                    >
+                      Remove Item
+                    </button>
+                  </div>
                 </div>
-               </div>
-               <hr className="w-full bg-gray-500" />
-               <div className="flex flex-row-reverse pt-4">
-                   <p className="font-semibold text-xl">Subtotal ({commands.length} items) : 
-                   
-                   <Currency  quantity={commands.reduce((total,item)=>(total+(item.product.price*item.quantity)),0)} /> 
-                   
-                   </p>
-               </div>
+                <hr className="w-full bg-gray-500" />
+                <div className="flex flex-row-reverse pt-4">
+                  <p className="text-xl font-semibold">
+                    Subtotal ({commands.length} items) :
+                    <Currency
+                      quantity={commands.reduce(
+                        (total, item) =>
+                          total + item.product.price * item.quantity,
+                        0
+                      )}
+                    />
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-           ))}
-           
-       </div>
-       <div className="bg-white p-4 space-y-4 max-h-64">
-          <div className="text-lg "> <p>Subtotal ({commands.length} items):   </p>
-                <span className="font-semibold text-2xl pl-2">
-                <Currency  quantity={commands.reduce((total,item)=>(total+(item.product.price*item.quantity)),0)} />        
-                 </span>
-         </div>
-         <button role="link" type="button" className="bg-yellow-400 text-semibold text-sm rounded-md w-full py-3" onClick={createCheckoutSession}>PROCEED TO CHECKOUT</button>
-       </div>
-       </>
-         )
-        }
-      
-     
+          <div className="max-h-64 space-y-4 bg-white p-4">
+            <div className="text-lg ">
+              {' '}
+              <p>Subtotal ({commands.length} items): </p>
+              <span className="pl-2 text-2xl font-semibold">
+                <Currency
+                  quantity={commands.reduce(
+                    (total, item) => total + item.product.price * item.quantity,
+                    0
+                  )}
+                />
+              </span>
+            </div>
+            <button
+              role="link"
+              type="button"
+              className="text-semibold w-full rounded-md bg-yellow-400 py-3 text-sm"
+              onClick={() => {
+                setSpin(true)
+                createCheckoutSession()
+              }}
+            >
+              {!Spin ? (
+                <p className="text-md font-semibold">PROCEED TO CHECKOUT</p>
+              ) : (
+                <div className="text-md flex justify-center font-semibold">
+                  Processing...{' '}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={` h-6 w-6 animate-spin`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                </div>
+              )}
+            </button>
+          </div>
+        </>
+      )}
     </main>
-    
   )
 }
 
