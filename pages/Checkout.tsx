@@ -22,22 +22,29 @@ function Checkout() {
         dispatch(RemoveFromBasket(id))
     }
     const createCheckoutSession = async ()=>{
-      console.log(process.env.stripe_public_key);
     const stripe = await stripePromise
-    const checkoutSession = await fetch("/api/create-session",{
-      method: "POST",
-      headers:{
-        contentType: "application/json",
-      },
-      body: JSON.stringify({
-            commands,
-            email:session?.user?.email
+    const response = await fetch("/api/create-session",{
+                  method: "POST",
+                  headers:{
+                      contentType: "application/json",
+                          },
+                  body: JSON.stringify({
+                        commands,
+                        email:session?.user?.email
 
-      })
+                  })
+             })
+
+    const checkoutSession  = await response.json()
+     
+    const result = await stripe?.redirectToCheckout({
+        sessionId :checkoutSession.id
     })
-    const res  = await checkoutSession.json()
 
-    console.log(res.id)
+    if(result?.error) {
+        alert(result.error.message)
+    }
+  
     
     }
   return (
