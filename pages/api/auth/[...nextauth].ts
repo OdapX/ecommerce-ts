@@ -4,6 +4,7 @@ import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
 import EmailProvider from 'next-auth/providers/email'
 
+console.log(process.env.GOOGLE_SECRET)
 export default NextAuth({
   providers: [
     // OAuth authentication providers...
