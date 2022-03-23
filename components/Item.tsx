@@ -23,8 +23,8 @@ export default function Item({ product }: Props) {
 
       {
         position: 'top-right',
-        autoClose: 1000,
-        hideProgressBar: false,
+        autoClose: 500,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: true,
