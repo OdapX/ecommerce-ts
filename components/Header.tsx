@@ -8,7 +8,7 @@ function Header() {
   const { data: session } = useSession()
   const router = useRouter()
   return (
-    <div className="sticky top-0 z-20 bg-[#121923] px-4  ">
+    <div className="sticky top-0 z-20 bg-[#121923] px-4 pb-2  lg:pb-0  ">
       <div className=" flex  items-center justify-between space-x-5 py-2">
         <div
           className="cursor-pointer text-3xl font-semibold text-white"
@@ -16,7 +16,7 @@ function Header() {
         >
           ESTORE
         </div>
-        <div className="group relative  hidden h-11 flex-grow  space-x-2 rounded-lg focus:ring focus:ring-green-600 lg:flex">
+        <div className="group relative  hidden h-9 flex-grow  space-x-2 rounded-lg focus:ring focus:ring-green-600 lg:flex">
           <input
             type="text"
             className="flex flex-shrink flex-grow rounded-lg  p-2 focus:outline-none focus:ring focus:ring-yellow-400"
@@ -24,7 +24,7 @@ function Header() {
           <div className="absolute right-0 h-full cursor-pointer  rounded-r-lg bg-yellow-500 p-2 px-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -99,10 +99,10 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className="relative flex  flex-grow space-x-2   rounded-lg focus:ring focus:ring-green-600 lg:hidden">
+      <div className="relative flex  flex-grow space-x-2   rounded-lg  focus:ring focus:ring-green-600 lg:hidden">
         <input
           type="text"
-          className="flex flex-shrink flex-grow rounded-lg   focus:outline-none focus:ring focus:ring-yellow-400"
+          className="flex h-8 flex-shrink flex-grow rounded-lg   focus:outline-none focus:ring focus:ring-yellow-400"
         />
         <div className="absolute right-0 h-full cursor-pointer  rounded-r-lg bg-yellow-500 p-2 px-4">
           <svg
