@@ -6,7 +6,9 @@ import Currency from 'react-currency-formatter'
 import { loadStripe } from '@stripe/stripe-js'
 import { useSession, signIn } from 'next-auth/react'
 import { useState } from 'react'
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || ''
+)
 
 interface Command {
   product: Product
