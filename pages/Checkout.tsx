@@ -50,7 +50,7 @@ function Checkout() {
         <div className="col-span-7 mt-10 w-full">
           <h1 className="font-sansserif text-3xl">Shopping Cart</h1>
           <div className="grid w-full grid-cols-1  place-items-center sm:grid-cols-2">
-            <div className="font-sansserif border-1 rounded-md border bg-yellow-400 py-2 px-4 text-center text-xl">
+            <div className="font-sansserif rounded-md  bg-yellow-400 py-2 px-4 text-center text-xl">
               Your Cart Is Empty
             </div>
             <img src="https://m.media-amazon.com/images/G/01/cart/empty/kettle-desaturated._CB445243794_.svg" />

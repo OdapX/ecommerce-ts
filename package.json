@@ -23,6 +23,7 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-responsive-carousel": "^3.2.23",
+    "react-toastify": "^8.2.0",
     "stripe": "^8.210.0"
   },
   "devDependencies": {

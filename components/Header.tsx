@@ -3,7 +3,14 @@ import Link from 'next/link'
 import { SelectProducts } from '../Reduxstore/BasketSlice'
 import { useAppSelector } from '../Reduxstore/Hooks'
 import { useRouter } from 'next/router'
+import { useContext } from 'react'
+import { SearchContext } from './Layout'
+interface Props {
+  Search: (arg: string) => void
+}
 function Header() {
+  const { Search, setSearch } = useContext(SearchContext)
+
   const Items = useAppSelector(SelectProducts)
   const { data: session } = useSession()
   const router = useRouter()
@@ -19,7 +26,9 @@ function Header() {
         <div className="group relative  hidden h-9 flex-grow  space-x-2 rounded-lg focus:ring focus:ring-green-600 lg:flex">
           <input
             type="text"
+            placeholder="Search by product title"
             className="flex flex-shrink flex-grow rounded-lg  p-2 focus:outline-none focus:ring focus:ring-yellow-400"
+            onChange={(e) => setSearch(e.target.value)}
           />
           <div className="absolute right-0 h-full cursor-pointer  rounded-r-lg bg-yellow-500 p-2 px-4">
             <svg
@@ -102,7 +111,9 @@ function Header() {
       <div className="relative flex  flex-grow space-x-2   rounded-lg  focus:ring focus:ring-green-600 lg:hidden">
         <input
           type="text"
+          placeholder="Search by product title"
           className="flex h-8 flex-shrink flex-grow rounded-lg   focus:outline-none focus:ring focus:ring-yellow-400"
+          onChange={(e) => setSearch(e.target.value)}
         />
         <div className="absolute right-0 h-full cursor-pointer  rounded-r-lg bg-yellow-500 p-2 px-4">
           <svg

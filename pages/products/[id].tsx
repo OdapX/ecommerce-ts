@@ -5,6 +5,8 @@ import { useState } from 'react'
 import Item from '../../components/Item'
 import { useAppDispatch } from '../../Reduxstore/Hooks'
 import { AddToBasket } from '../../Reduxstore/BasketSlice'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 function product({
   product,
   Related_products,
@@ -16,6 +18,20 @@ function product({
 
   const AddItemToBasket = () => {
     dispatch(AddToBasket({ product, quantity: Quantity }))
+    toast.success(
+      <h1 className="text-lg ">Added to basket</h1>,
+
+      {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 20,
+        progress: undefined,
+      }
+    )
   }
   const [Quantity, setQuantity] = useState<number>(1)
   const HandleQuantity = (e: any) => {

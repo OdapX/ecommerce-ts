@@ -1,5 +1,7 @@
 import { Product } from '../typings'
 import Currency from 'react-currency-formatter'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import {
   SelectProducts,
   AddToBasket,
@@ -16,12 +18,24 @@ export default function Item({ product }: Props) {
 
   const AddIemToBasket = () => {
     dispatch(AddToBasket({ product, quantity: 1 }))
+    toast.success(
+      <h1 className="text-lg ">Added to basket</h1>,
+
+      {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        draggablePercent: 20,
+        progress: undefined,
+      }
+    )
   }
-  const RemoveItemFromBasket = () => {
-    dispatch(RemoveFromBasket(product.id))
-  }
+
   return (
-    <div className="group flex  cursor-pointer flex-col space-y-3 overflow-hidden bg-white p-3 shadow">
+    <div className="group flex  cursor-pointer flex-col space-y-3  bg-white p-3 shadow">
       <div onClick={() => router.push(`/products/${product.id}`)}>
         <img
           loading="lazy"

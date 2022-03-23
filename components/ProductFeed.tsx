@@ -3,7 +3,7 @@ import { Product } from '../typings'
 import Item from './Item'
 
 interface Props {
-  products: [Product]
+  products: Product[]
 }
 function ProductFeed({ products }: Props) {
   return (
