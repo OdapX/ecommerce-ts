@@ -21,7 +21,7 @@
 import { getFirestore, FieldValue } from 'firebase-admin/firestore'
 import { initializeApp, cert, getApp, getApps } from 'firebase-admin/app'
 
-const serviceAccount = require('../../permissions.json')
+const serviceAccount = require('./permissions.json')
 
 if (!getApps().length) {
   const app = initializeApp({
