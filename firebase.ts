@@ -1,5 +1,10 @@
-import { initializeApp, applicationDefault,getApps,getApp } from 'firebase-admin/app';
-import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
+import {
+  initializeApp,
+  applicationDefault,
+  getApps,
+  getApp,
+} from 'firebase-admin/app'
+import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore'
 export const firebaseConfig = {
   apiKey: 'AIzaSyAO6QOxsKSYQR3Wi3pnAi77xoa6qikhhtU',
   authDomain: 'ecommerce-37950.firebaseapp.com',
@@ -9,6 +14,6 @@ export const firebaseConfig = {
   appId: '1:783618676442:web:afc5929d3cf467e555f7e3',
 }
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig)
 
-export const db =  getFirestore(app)
+export const db = getFirestore(app)

@@ -11,7 +11,7 @@ export interface Product {
   }
 }
 export interface OrderType {
-  id: string
+  id: number
   amount: number
   amountShipping: number
   images: string[]

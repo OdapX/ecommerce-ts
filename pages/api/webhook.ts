@@ -57,7 +57,7 @@ export default async function handler(
 
       try {
         await PostOrder(sessionInfo)
-        console.log('SUCEEEEES')
+
         return res.status(200).send('Order Confirmed !')
       } catch (err) {
         console.log(err)

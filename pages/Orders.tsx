@@ -22,8 +22,9 @@ function Orders({ orders }: Props) {
           <hr />
 
           <div className="mt-7 ">
-            {orders?.map((order: any) => (
+            {orders?.map((order: OrderType) => (
               <Order
+                key={order.id}
                 id={order.id}
                 amount={order.amount}
                 shipping_amount={order.amountShipping}
