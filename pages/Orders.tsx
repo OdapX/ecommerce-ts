@@ -14,11 +14,13 @@ function Orders({ orders }: Props) {
     <div className="">
       {session?.user ? (
         <main className="mx-auto max-w-screen-2xl p-7">
-          <h1 className="mb-5 text-3xl">Orders ({orders.length}) </h1>
+          <h1 className="mb-5 text-3xl">
+            Orders ({orders ? orders?.length : 0}){' '}
+          </h1>
           <hr />
 
           <div className="mt-7 ">
-            {orders.map((order: any) => (
+            {orders?.map((order: any) => (
               <Order
                 id={order.id}
                 amount={order.amount}
