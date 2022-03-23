@@ -3,8 +3,10 @@ import { signIn, signOut, getSession, useSession } from 'next-auth/react'
 import moment from 'moment'
 import { useState } from 'react'
 import Order from '../components/Order'
+import { OrderType } from '../typings'
+
 interface Props {
-  orders: any
+  orders: OrderType[]
 }
 
 function Orders({ orders }: Props) {
