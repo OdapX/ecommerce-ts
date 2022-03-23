@@ -24,11 +24,11 @@ export default function Item({ product }: Props) {
       {
         position: 'top-right',
         autoClose: 500,
-        hideProgressBar: true,
+        hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
-        draggable: true,
-        draggablePercent: 20,
+        draggable: false,
+        draggablePercent: 0,
         progress: undefined,
       }
     )
