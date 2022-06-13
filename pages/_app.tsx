@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { store } from '../Reduxstore/store'
 import Layout from '../components/Layout'
 import { ToastContainer, Zoom } from 'react-toastify'
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component , pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
